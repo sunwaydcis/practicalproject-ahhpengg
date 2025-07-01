@@ -67,7 +67,7 @@
                      <buttons>
                         <Button mnemonicParsing="false" text="New..." />
                         <Button mnemonicParsing="false" text="Edit..." />
-                        <Button mnemonicParsing="false" text="Delete" />
+                        <Button mnemonicParsing="false" onAction="#handleDeletePerson" text="Delete" />
                      </buttons>
                   </ButtonBar>
                   <TextField fx:id="mytext" layoutX="14.0" layoutY="228.0" />
