@@ -31,9 +31,9 @@ object DateUtil :
      * @param dateString the date as String
      * @return the date object or null if it could not be converted
      */
-    def parseLocalDate : LocalDate =
+    def parseLocalDate : Option[LocalDate] =
       try
-        LocalDate.parse(data, DATE_FORMATTER)
+        Option(LocalDate.parse(data, DATE_FORMATTER))
       catch
         case  e: DateTimeParseException => null
 
