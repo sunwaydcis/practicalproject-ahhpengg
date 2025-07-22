@@ -1,7 +1,8 @@
 package ch.makery.address
 
 import ch.makery.address.model.Person
-import ch.makery.address.view.PersonEditDialogController
+import ch.makery.address.util.Database
+import ch.makery.address.view.{PersonEditDialogController, PersonOverviewController}
 import javafx.fxml.FXMLLoader
 import scalafx.application.JFXApp3
 import scalafx.application.JFXApp3.PrimaryStage
@@ -13,11 +14,12 @@ import scalafx.scene.image.Image
 import scalafx.stage.{Modality, Stage}
 
 object MainApp extends JFXApp3:
-
+  Database.setupDB()
   //Window Root Pane
   var roots: Option[scalafx.scene.layout.BorderPane] = None
   //stylesheet
   var cssResource = getClass.getResource("view/DarkTheme.css")
+  var personOverviewController: Option[PersonOverviewController] = None
 
 
   /**
@@ -28,15 +30,8 @@ object MainApp extends JFXApp3:
   /**
    * Constructor
    */
-  personData += new Person("Hans", "Muster")
-  personData += new Person("Ruth", "Mueller")
-  personData += new Person("Heinz", "Kurz")
-  personData += new Person("Cornelia", "Meier")
-  personData += new Person("Werner", "Meyer")
-  personData += new Person("Lydia", "Kunz")
-  personData += new Person("Anna", "Best")
-  personData += new Person("Stefan", "Meier")
-  personData += new Person("Martin", "Mueller")
+  //assign all person into personData array
+  personData ++= Person.getAllPersons
 
 
   override def start(): Unit =
@@ -65,6 +60,8 @@ object MainApp extends JFXApp3:
     val loader = new FXMLLoader(resource)
     loader.load()
     val roots = loader.getRoot[jfxs.layout.AnchorPane]
+    val ctrl = loader.getController[PersonOverviewController]
+    personOverviewController = Option(ctrl)
     this.roots.get.center = roots
 
   def showPersonEditDialog(person: Person): Boolean =
